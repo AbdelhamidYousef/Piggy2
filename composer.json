@@ -1,0 +1,15 @@
+{
+  "name": "g15/piggy2",
+  "autoload": {
+    "psr-4": {
+      "Framework\\": "src/Framework"
+    }
+  },
+  "authors": [
+    {
+      "name": "Abdulhamid",
+      "email": "abdelhamedy33@gmail.com"
+    }
+  ],
+  "require": {}
+}

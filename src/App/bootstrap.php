@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-require __DIR__ . '/../Framework/Framework.php';
+use Framework\Framework;
 
-$framework = new FrameWork\Framework;
+require_once __DIR__ . '/../../vendor/autoload.php';
+
+$framework = new Framework;
 $framework->run();

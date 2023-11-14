@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-use App\Controllers\HomeController;
 use Framework\Framework;
 
+use function App\Config\registerRoutes;
+
 $framework = new Framework();
-$framework->get('/', 'GET', [HomeController::class, 'render']);
+registerRoutes($framework);
 $framework->run();

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Controllers\HomeController;
 use Framework\Framework;
 
-require_once __DIR__ . '/../../vendor/autoload.php';
-
-$framework = new Framework;
+$framework = new Framework();
+$framework->get('/', 'GET', [HomeController::class, 'render']);
 $framework->run();

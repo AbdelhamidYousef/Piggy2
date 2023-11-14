@@ -6,8 +6,23 @@ namespace Framework;
 
 class Framework
 {
-    public function run()
+    private Router $router;
+
+    public function __construct()
     {
-        echo 'Framework Running';
+        $this->router = new Router();
+    }
+
+    public function run(): void
+    {
+        $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $method = $_SERVER['REQUEST_METHOD'];
+
+        $this->router->dispatch($path, $method);
+    }
+
+    public function get(string $path, string $method, array $controller): void
+    {
+        $this->router->add($path,  $method,  $controller);
     }
 }

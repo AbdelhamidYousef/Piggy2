@@ -2,7 +2,8 @@
   "name": "g15/piggy2",
   "autoload": {
     "psr-4": {
-      "Framework\\": "src/Framework"
+      "Framework\\": "src/Framework",
+      "App\\": "src/App"
     }
   },
   "authors": [

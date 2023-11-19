@@ -4,16 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Config\Config;
 use Framework\TemplateEngine;
 
 class HomeController
 {
-    private TemplateEngine $templateEngine;
-
-    public function __construct()
+    public function __construct(private TemplateEngine $templateEngine)
     {
-        $this->templateEngine = new TemplateEngine(Config::VIEWS_BASE_PATH);
     }
 
     public function render(): void

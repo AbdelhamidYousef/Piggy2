@@ -15,7 +15,7 @@ class Router
         $this->routes[] = ['path' => $path, 'method' => $method, 'controller' => $controller];
     }
 
-    public function dispatch(string $path, string $method): void
+    public function dispatch(string $path, string $method, Container $container): void
     {
         $path = $this->normalizePath($path);
         $method = strtoupper($method);
@@ -23,11 +23,8 @@ class Router
         foreach ($this->routes as $route) {
             if ($path !== $route['path'] || $method !== $route['method']) continue;
 
-            $controller = $route['controller'];
-            $controllerName = $controller[0];
-            $controllerFn = $controller[1];
-
-            $controllerInstance = new $controllerName();
+            [$controllerName, $controllerFn] = $route['controller'];
+            $controllerInstance = $container->resolve($controllerName);
             $controllerInstance->$controllerFn();
         }
     }

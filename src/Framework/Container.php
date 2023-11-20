@@ -11,6 +11,7 @@ use ReflectionNamedType;
 class Container
 {
     private array $definitions = [];
+    private array $resolvedDependencies = [];
 
     public function addDefinitions(array $newDefinitions): void
     {
@@ -32,7 +33,7 @@ class Container
         $params = $constructor->getParameters();
         if (count($params) === 0) return new $className();
 
-        // [3] Validate the each parameter's type (to be a class name)
+        // [3] Validate each parameter's type (to be a class) 
         $dependencies = [];
         foreach ($params as $param) {
             $paramType = $param->getType(); // Null if the param doesn't have a type hint || an instance of the reflection type classes depending on the type hint of the param
@@ -43,18 +44,21 @@ class Container
             if (!$paramType instanceof ReflectionNamedType || $paramType->isBuiltin())
                 throw new ContainerException("Failed to resolve class $className because parameter $paramName has invalid type ($paramType)");
 
-            // [4] Check if the param exists in the definitions & add the dependency to the dependecies array
+            // [4] Check if the param exists in the definitions 
             $dependencyName = $paramType->getName(); // Note that the paramType isn't the actual type string, but an instance of the ReflectionNamedType class
 
             if (!array_key_exists($dependencyName, $this->definitions))
                 throw new ContainerException("Dependency $dependencyName doesn't exist in the container definitions");
 
+            // [5] Instantiate the dependency & save it 
             $factoryFn = $this->definitions[$dependencyName];
             $depencyInstance = $factoryFn();
+
             $dependencies[] = $depencyInstance;
+            $this->resolvedDependencies[$dependencyName] = $depencyInstance;
         }
 
-        // [5] Finally, return an instance of the className with its dependencies
+        // [5] Finally, return an instance of the class with its dependencies
         return $reflectionClass->newInstanceArgs($dependencies);
     }
 }

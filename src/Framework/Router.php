@@ -26,6 +26,7 @@ class Router
             [$controllerName, $controllerFn] = $route['controller'];
             $controllerInstance = $container->resolve($controllerName);
             $controllerInstance->$controllerFn();
+            return;
         }
     }
 

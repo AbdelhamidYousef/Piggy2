@@ -6,7 +6,7 @@ namespace App\Config;
 
 use Framework\{Framework, TemplateEngine};
 
-class ContainerManager
+abstract class ContainerManager
 {
     public static function registerDefinitions(Framework $framework): void
     {

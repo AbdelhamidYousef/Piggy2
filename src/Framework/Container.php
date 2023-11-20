@@ -50,12 +50,16 @@ class Container
             if (!array_key_exists($dependencyName, $this->definitions))
                 throw new ContainerException("Dependency $dependencyName doesn't exist in the container definitions");
 
-            // [5] Instantiate the dependency & save it 
-            $factoryFn = $this->definitions[$dependencyName];
-            $depencyInstance = $factoryFn();
+            // [5] Get an Instance of the dependency class
+            if (array_key_exists($dependencyName, $this->resolvedDependencies)) {
+                $depencyInstance = $this->resolvedDependencies[$dependencyName];
+            } else {
+                $factoryFn = $this->definitions[$dependencyName];
+                $depencyInstance = $factoryFn();
+                $this->resolvedDependencies[$dependencyName] = $depencyInstance;
+            }
 
             $dependencies[] = $depencyInstance;
-            $this->resolvedDependencies[$dependencyName] = $depencyInstance;
         }
 
         // [5] Finally, return an instance of the class with its dependencies

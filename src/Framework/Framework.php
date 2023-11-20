@@ -32,4 +32,9 @@ class Framework
     {
         $this->container->addDefinitions($definitions);
     }
+
+    public function addMiddlewares(array $middlewares): void
+    {
+        $this->router->addMiddlewares($middlewares);
+    }
 }

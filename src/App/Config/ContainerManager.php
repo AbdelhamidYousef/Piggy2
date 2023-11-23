@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Config;
 
+use App\Services\ValidatorService;
 use Framework\{Framework, TemplateEngine};
 
 abstract class ContainerManager
@@ -12,6 +13,7 @@ abstract class ContainerManager
     {
         $definitions = [
             TemplateEngine::class => fn () => new TemplateEngine(Config::VIEWS_BASE_PATH),
+            ValidatorService::class => fn () => new ValidatorService(),
         ];
 
         $framework->addDefinitions($definitions);

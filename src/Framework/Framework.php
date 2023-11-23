@@ -23,7 +23,7 @@ class Framework
         $this->router->dispatch($path, $method, $this->container);
     }
 
-    public function get(string $path, string $method, array $controller): void
+    public function add(string $path, string $method, array $controller): void
     {
         $this->router->add($path,  $method,  $controller);
     }

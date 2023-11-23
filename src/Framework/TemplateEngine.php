@@ -7,6 +7,7 @@ namespace Framework;
 class TemplateEngine
 {
     private array $globalData = [];
+    private array $errors = [];
 
     public function __construct(private string $basePath)
     {
@@ -25,7 +26,7 @@ class TemplateEngine
         return $output;
     }
 
-    public function addGlobal(string $key, string $value): void
+    public function addGlobal(string $key, mixed $value): void
     {
         $this->globalData[$key] = $value;
     }
